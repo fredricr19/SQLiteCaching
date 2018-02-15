@@ -22,7 +22,7 @@ def saveURL(url):
     c.execute("CREATE TABLE IF NOT EXISTS cache (url, html, time)")
     
     if search(c, url):
-        html = getURL.getURL(url).replace('"', '\"').replace("'", "\'")
+        html = getURL.getURL(url).replace('"', '&quot;').replace("'", "&apos;")
         insert = "'%s','%s','%s'" % (url, html, str(int(time.time())))
         
         c.execute("INSERT INTO cache VALUES (" + insert + ")")
@@ -47,7 +47,7 @@ def getHTML(url, html=""):
         html = getHTML(url)
     
     conn.close()
-    return html
+    return html.replace('&quot;', '"').replace("&apos;", "'")
 
 def main():
     url = "http://www.githubstat.us/"
@@ -56,3 +56,6 @@ def main():
     #saveURL(url)
     print(getHTML(url))
     print(round(time.time() - start, 5), "seconds")
+
+if __name__ == '__main__':
+    main()
