@@ -39,19 +39,20 @@ def getHTML(url, html=""):
     c.execute("CREATE TABLE IF NOT EXISTS cache (url, html, time)")
     
     if not search(c, url):
-        #print("Age:", getAge(c, url))
         c.execute("SELECT html FROM cache WHERE url='" + url + "'")
         for row in c:
             html = row[0]
+    if search(c, url):
+        saveURL(url)
+        html = getHTML(url)
     
     conn.close()
     return html
 
-
 def main():
-    url = "https://rtsfred3.github.io/echoo/index2.html"
+    url = "http://www.githubstat.us/"
     
     start = time.time()
-    saveURL(url)
-    print(round(time.time() - start, 5), "seconds")
+    #saveURL(url)
     print(getHTML(url))
+    print(round(time.time() - start, 5), "seconds")
