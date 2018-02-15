@@ -22,7 +22,7 @@ def saveURL(url):
     c.execute("CREATE TABLE IF NOT EXISTS cache (url, html, time)")
     
     if search(c, url):
-        html = getURL.getURL(url)
+        html = getURL.getURL(url).replace('"', '\"').replace("'", "\'")
         insert = "'%s','%s','%s'" % (url, html, str(int(time.time())))
         
         c.execute("INSERT INTO cache VALUES (" + insert + ")")
