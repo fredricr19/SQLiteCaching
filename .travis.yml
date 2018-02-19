@@ -6,6 +6,12 @@ install:
   - pip install -r requirements.txt
   - pip install pytest-cov
   - pip install pytest
+  - pip install codecov
 
 script:
-  - pytest
+  - pytest --cov=./
+  - coverage run test_getURL.py
+  - coverage run test_caching.py
+
+after_success:
+  - codecov -t 52675a04-1366-42d0-ac4c-91b2d1ee9a3a
